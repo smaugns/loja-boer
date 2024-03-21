@@ -2,6 +2,7 @@ import 'package:appcrud/product.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'client.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,7 +31,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Exemplo Menu Drawer - Hamburguer',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
+        primarySwatch: Colors.brown, // Define a cor principal como marrom
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.brown, // Define a cor do AppBar como marrom
+        ),
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -70,13 +74,10 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.shopping_cart),
                 title: Text("Cadastro Clientes"),
                 onTap: () {
-                     Navigator.push(
-
-                     context,
-
-                     MaterialPageRoute(builder: (context) => SaveClient()),;
-
-//);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SaveClient()),
+                  );
                 },
               ),
               ListTile(
@@ -107,7 +108,7 @@ class MyHomePage extends StatelessWidget {
               image: DecorationImage(
                   fit: BoxFit.fill,
                   image: NetworkImage(
-                      'https://th.bing.com/th/id/R.a4cd60c29032032980f9954bbbd2519e?rik=dRTohuUq9ZC8wg&pid=ImgRaw&r=0'))),
+                      'https://th.bing.com/th/id/R.ee77ff08631e759a6ca32cd668cb227e?rik=XAC2DJpDhiEDbg&pid=ImgRaw&r=0'))),
         ));
   }
 }
