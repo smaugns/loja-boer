@@ -4,28 +4,26 @@ import 'package:cloud_firestore/cloud_firestore.dart'; // Adicione esta linha
 
 // O restante do seu código continua aqui
 
-class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+class SaveClient extends StatefulWidget {
+  const SaveClient({Key? key}) : super(key: key);
 
   @override
   State<SaveClient> createState() => _SaveClientState();
 }
 
 class _SaveClientState extends State<SaveClient> {
-  // text fields' controllers
-
   final TextEditingController _nameController = TextEditingController();
 
-  final TextEditingController _brandController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
 
-  final TextEditingController _typeController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   //final TextEditingController _imageController = TextEditingController();
 
   final CollectionReference _products =
-      FirebaseFirestore.instance.collection('products');
+      FirebaseFirestore.instance.collection('client');
 
   Future<void> _createOrUpdate([DocumentSnapshot? documentSnapshot]) async {
     String action = 'create';
@@ -35,11 +33,11 @@ class _SaveClientState extends State<SaveClient> {
 
       _nameController.text = documentSnapshot['name'];
 
-      _brandController.text = documentSnapshot['brand'];
+      _emailController.text = documentSnapshot['email'];
 
-      _priceController.text = documentSnapshot['price'].toString();
+      _cpfController.text = documentSnapshot['cpf'].toString();
 
-      _typeController.text = documentSnapshot['type'];
+      _passwordController.text = documentSnapshot['password'];
 
       //_imageController.text = documentSnapshot['image'];
     }
@@ -63,23 +61,23 @@ class _SaveClientState extends State<SaveClient> {
               children: [
                 TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Produto'),
+                  decoration: const InputDecoration(labelText: 'Nome'),
                 ),
                 TextField(
-                  controller: _brandController,
-                  decoration: const InputDecoration(labelText: 'Marca'),
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'email'),
                 ),
                 TextField(
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  controller: _priceController,
+                  controller: _cpfController,
                   decoration: const InputDecoration(
-                    labelText: 'Preço',
+                    labelText: 'CPF',
                   ),
                 ),
                 TextField(
-                  controller: _typeController,
-                  decoration: const InputDecoration(labelText: 'Cor'),
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'SENHA'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -89,27 +87,26 @@ class _SaveClientState extends State<SaveClient> {
                   onPressed: () async {
                     final String? name = _nameController.text;
 
-                    final String? brand = _brandController.text;
+                    final String? email = _emailController.text;
 
-                    final double? price =
-                        double.tryParse(_priceController.text);
+                    final double? cpf = double.tryParse(_cpfController.text);
 
-                    final String? type = _typeController.text;
+                    final String? password = _passwordController.text;
 
                     // final String? image = _imageController.text;
 
                     if (name != null &&
-                        brand != null &&
-                        price != null &&
-                        type != null) {
+                        email != null &&
+                        cpf != null &&
+                        password != null) {
                       if (action == 'create') {
 // Persist a new product to Firestore
 
                         await _products.add({
                           "name": name,
-                          "brand": brand,
-                          "price": price,
-                          "type": type,
+                          "email": email,
+                          "cpf": cpf,
+                          "password": password,
                         });
                       }
 
@@ -118,9 +115,9 @@ class _SaveClientState extends State<SaveClient> {
 
                         await _products.doc(documentSnapshot!.id).update({
                           "name": name,
-                          "brand": brand,
-                          "price": price,
-                          "type": type,
+                          "email": email,
+                          "cpf": cpf,
+                          "password": password,
                         });
                       }
 
@@ -128,11 +125,11 @@ class _SaveClientState extends State<SaveClient> {
 
                       _nameController.text = '';
 
-                      _brandController.text = '';
+                      _emailController.text = '';
 
-                      _priceController.text = '';
+                      _cpfController.text = '';
 
-                      _typeController.text = '';
+                      _passwordController.text = '';
 
                       //_imageController.text = '';
 
@@ -163,7 +160,7 @@ class _SaveClientState extends State<SaveClient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastrar produto'),
+        title: const Text('Cadastrar cliente'),
       ),
 
 // Using StreamBuilder to display all products from Firestore in real-time
@@ -182,7 +179,14 @@ class _SaveClientState extends State<SaveClient> {
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
                     title: Text(documentSnapshot['name']),
-                    subtitle: Text(documentSnapshot['price'].toString()),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(documentSnapshot['cpf'].toString()),
+                        Text(documentSnapshot['email']),
+                        Text(documentSnapshot['password']),
+                      ],
+                    ),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(
