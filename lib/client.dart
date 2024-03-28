@@ -161,6 +161,10 @@ class _SaveClientState extends State<SaveClient> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastrar cliente'),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
       ),
 
 // Using StreamBuilder to display all products from Firestore in real-time

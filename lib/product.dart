@@ -79,7 +79,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 TextField(
                   controller: _typeController,
-                  decoration: const InputDecoration(labelText: 'Cor'),
+                  decoration: const InputDecoration(labelText: 'Tipo'),
                 ),
                 const SizedBox(
                   height: 20,
@@ -164,6 +164,10 @@ class _ProductPageState extends State<ProductPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastrar produto'),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
       ),
 
 // Using StreamBuilder to display all products from Firestore in real-time
@@ -181,8 +185,14 @@ class _ProductPageState extends State<ProductPage> {
                 return Card(
                   margin: const EdgeInsets.all(10),
                   child: ListTile(
-                    title: Text(documentSnapshot['name']),
-                    subtitle: Text(documentSnapshot['price'].toString()),
+                    title: Text(documentSnapshot['brand']),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(documentSnapshot['price'].toString()),
+                        Text(documentSnapshot['name']),
+                      ],
+                    ),
                     trailing: SizedBox(
                       width: 100,
                       child: Row(

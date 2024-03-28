@@ -55,6 +55,7 @@ class MyHomePage extends StatelessWidget {
                 accountEmail: Text("alexandre.bortolozo@fatec.sp.gov.br"),
                 accountName: Text("Alexandre Bortolozo"),
                 currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
                   child: Text("PUB'S"),
                 ),
               ),
@@ -71,7 +72,7 @@ class MyHomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.shopping_cart),
+                leading: Icon(Icons.assignment_ind_outlined),
                 title: Text("Cadastro Clientes"),
                 onTap: () {
                   Navigator.push(
@@ -82,7 +83,7 @@ class MyHomePage extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(Icons.email),
-                title: Text("Contato"),
+                title: Text("Ler API"),
                 onTap: () {
                   Navigator.pop(context);
 
